@@ -1,5 +1,5 @@
 {
-  "name": "barcode",
+  "name": "template",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -10,10 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bwip-js": "^3.0.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.8"
+    "nodemon": "^2.0.12"
   }
 }
