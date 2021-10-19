@@ -5,11 +5,13 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('./controllers/authController');
+/** Requires dos controllers */
+const authController = require('./controllers/authController');
+const requisicoesController = require('./controllers/requisicoesController');
 
-app.get('/', function (req, res) {
-  res.send({ "acao": 'logout' })
-})
+/** Use controllers */
+app.use('/auth', authController );
+app.use('/requisicoes', requisicoesController );
 
 app.listen(80, function () {
   console.log('API template iniciado porta: 80')

@@ -9,22 +9,24 @@ module.exports = (req, res, next) => {
     return res.status(401).send({ error: 'Token não informado!' });
 
   // Bearer + hash
-
   const parts = authHeader.split(' ');
 
-  if (!parts.length === 2 )
-    return re.status(401).send({ error: 'Token error' })
-
+  if (!parts.length === 2 ) {
+    return re.status(401).send({ error: 'Token error' });
+  }
 
   const [ scheme, token ] = parts;
 
-  if (!/ˆBearer$ˆ/i.test(scheme))
-    res.status(401).send({ error: 'Token malformattted' })
+  if (scheme !== 'Bearer') {
+    res.status(401).send({ error: 'Token mal formatado' });
+  }
 
-  jwt.verify(token, authConfig.token, ( err, decoded) => {
+  jwt.verify(token, authConfig.secret, ( err, decoded) => {
     if(err) return res.status(401).send( { error: 'Token inválido' });
 
     req.user = decoded.id;
+
+    console.log(decoded.token_valid_afterou);
 
     return next();
 

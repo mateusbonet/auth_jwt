@@ -1,30 +1,29 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
-const app = express();
-
 const authConfig = require('../config/auth.json');
-const authMiddlewares = require('../middlewares/auth');
+const authMiddleware = require('../middlewares/auth');
 
-router.use(authMiddlewares);
+//router.use(authMiddleware);
 
-router.get('/', (req, res) => {
-  res.send({ acao: 'logout' })
-})
+router.post('/', (req, res) => {
 
-app.post('/auth/', function (req, res) {
+  const { user, password } = req.body;
 
-  //if (isNaN(req.body.password))
-   // return res.status(400).send({'error': 'Informe o usuário e senha!'})
+  if (!user || !password) {
+    return res.status(400).send({'error': 'Informe o usuário e senha!'})
+  }
 
-  const token = jtw.sign ({ id: 'chave_unica' }, authConfig.secret, { 
-    expiresIn: 100 
+  const token = jwt.sign ({ id: user }, authConfig.secret, { 
+    expiresIn: 10000 
   })
   
-  res.send({"token": token })
+  res.send({ "token": token })
 })
 
 router.post('/logout', function (req, res) {
   res.send({ acao: 'logout' })
 });
 
-module.exports = app => app.use('/auth', router );
+//module.exports = app => app.use('/auth', router ); //TODO
+module.exports = router;
