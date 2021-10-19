@@ -1,12 +1,14 @@
-var express = require('express')
-var app = express()
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+require('./controllers/authController');
 
 app.get('/', function (req, res) {
-  res.send({"teste": 'Hello World!' , teste: 123})
-})
-
-app.get('/consultaprodutos', function (req, res) {
-  res.send({"teste": 'Hello World!' , teste: { "cd": 12 , "descr": "produto teste"} })
+  res.send({ acao: 'logout' })
 })
 
 app.listen(80, function () {
